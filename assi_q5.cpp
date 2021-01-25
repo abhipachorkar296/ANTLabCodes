@@ -7,15 +7,15 @@ double A(double x)
 }
 double B(double x)
 {
-    return 0.0;
+    return (2.0)*x;
 }
 double C(double x)
 {
-    return (-1.0);
+    return 2.0;
 }
 double D(double x)
 {
-    return x;
+    return 4.0*x;
 }
 double a_index(double x, double h)
 {
@@ -34,9 +34,9 @@ double c_index(double x, double h)
 }
 int main()
 {
-    double h = 0.1;
+    double h = 0.01;
     double x_0 = 0.0;
-    double x_n = 1.0;
+    double x_n = 0.5;
     int n = (x_n - x_0) / h + 0.5;
     double *YY = new double[n + 1];
     double *XX = new double[n + 1];
@@ -46,9 +46,9 @@ int main()
     double *DD = new double[n + 1];
     double *C_bar = new double[n + 1];
     double *D_bar = new double[n + 1];
-    XX[0] = 0;
-    YY[0] = 0.0;
-    YY[n] = 0.0;
+    XX[0] = x_0;
+    YY[0] = 1.0;
+    YY[n] = 1.279;
     for (int i = 1; i <= n; i++)
     {
         XX[i] = XX[i - 1] + h;

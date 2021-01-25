@@ -11,11 +11,11 @@ double B(double x)
 }
 double C(double x)
 {
-    return (-1.0);
+    return (-2.0);
 }
 double D(double x)
 {
-    return x;
+    return 0.0;
 }
 double a_index(double x, double h)
 {
@@ -34,7 +34,7 @@ double c_index(double x, double h)
 }
 int main()
 {
-    double h = 0.1;
+    double h = 0.01;
     double x_0 = 0.0;
     double x_n = 1.0;
     int n = (x_n - x_0) / h + 0.5;
@@ -46,9 +46,8 @@ int main()
     double *DD = new double[n + 1];
     double *C_bar = new double[n + 1];
     double *D_bar = new double[n + 1];
-    XX[0] = 0;
-    YY[0] = 0.0;
-    YY[n] = 0.0;
+    XX[0] = x_0;
+    YY[0] = 1.0;
     for (int i = 1; i <= n; i++)
     {
         XX[i] = XX[i - 1] + h;
@@ -57,17 +56,17 @@ int main()
         CC[i] = c_index(XX[i], h);
         DD[i] = D(XX[i]);
     }
+    AA[n] = AA[n] + CC[n];
+    CC[n] = 0.0;
     C_bar[1] = CC[1] / BB[1];
     D_bar[1] = (DD[1] - AA[1] * YY[0]) / BB[1];
-
-    for (int i = 2; i < (n - 1); i++)
+    for (int i = 2; i <= (n); i++)
     {
         C_bar[i] = CC[i] / (BB[i] - AA[i] * C_bar[i - 1]);
         D_bar[i] = (DD[i] - AA[i] * D_bar[i - 1]) / (BB[i] - AA[i] * C_bar[i - 1]);
     }
-    YY[n - 1] = (DD[n] - CC[n - 1] * YY[n] - AA[n - 1] * D_bar[n - 2]) / (BB[n - 1] - AA[n - 1] * C_bar[n - 2]);
-
-    for (int i = n - 2; i >= 1; i--)
+    YY[n] = D_bar[n];
+    for (int i = n - 1; i >= 1; i--)
     {
         YY[i] = D_bar[i] - C_bar[i] * YY[i + 1];
     }
@@ -75,6 +74,5 @@ int main()
     {
         cout << "y(" << XX[i] << ") = " << YY[i] << "\n";
     }
-
     return 0;
 }
